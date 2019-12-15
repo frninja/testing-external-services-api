@@ -11,40 +11,49 @@ namespace OrderProcessing
 
     public class OrderService
     {
-        private string paymentApiBaseUrl;
+        private readonly string paymentApiBaseUrl = "https://api.payment-service.com";
+        private readonly HttpClient httpClient;
 
         public OrderService(string paymentApiBaseUrl)
         {
             this.paymentApiBaseUrl = paymentApiBaseUrl;
+            this.httpClient = new HttpClient();
+        }
+
+        public OrderService(HttpClient httpClient)
+        {
+            this.httpClient = httpClient;
         }
 
         public async Task ChargeOrder(Order order)
         {
-            string transcationId = await ChargePayment(order.Id, order.Total);
-
-            order.MarkAsPaid(transcationId);
+            try
+            {
+                string transcationId = await ChargePayment(order.Id, order.Total);
+                order.MarkAsPaid(transcationId);
+            }
+            catch (PaymentException e)
+            {
+                order.RecordPaymentError(e.PaymentError);
+            }
         }
 
         private async Task<string> ChargePayment(int orderId, decimal amount)
         {
-            using (HttpClient client = new HttpClient())
+            StringContent body = new StringContent(
+                JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
+                Encoding.UTF8,
+                "application/json");
+
+            HttpResponseMessage httpResponse = await httpClient.PostAsync($"{paymentApiBaseUrl}/charge", body);
+            JObject response = JObject.Parse(await httpResponse.Content.ReadAsStringAsync());
+
+            if (!httpResponse.IsSuccessStatusCode)
             {
-                StringContent body = new StringContent(
-                    JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
-                    Encoding.UTF8,
-                    "application/json");
-
-                HttpResponseMessage httpResponse = await client.PostAsync($"{paymentApiBaseUrl}/charge", body);
-                if (!httpResponse.IsSuccessStatusCode)
-                {
-                    throw new Exception("Payment failed");
-                }
-
-                string json = await httpResponse.Content.ReadAsStringAsync();
-                JObject responseObject = JObject.Parse(json);
-
-                return responseObject["transaction_id"].ToString();
+                throw new PaymentException(response["error"].ToString());
             }
+
+            return response["transaction_id"].ToString();
         }
     }
 }

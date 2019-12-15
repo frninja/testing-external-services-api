@@ -1,4 +1,6 @@
-﻿namespace OrderProcessing
+﻿using System;
+
+namespace OrderProcessing
 {
     public class Order
     {
@@ -7,7 +9,8 @@
 
         public bool IsPaid { get; private set; }
         public string PaymentId { get; private set; }
-        
+        public string PaymentError { get; private set; }
+
         public Order(int id, decimal total)
         {
             Id = id;
@@ -18,6 +21,11 @@
         {
             IsPaid = true;
             PaymentId = transactionId;
+        }
+
+        public void RecordPaymentError(string error)
+        {
+            PaymentError = error;
         }
     }
 }
