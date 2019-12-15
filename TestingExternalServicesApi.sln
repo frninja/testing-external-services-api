@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderProcessing", "OrderProcessing\OrderProcessing.csproj", "{C15DEB59-A200-41D5-89D7-6B53454C48F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderProcessing.Tests", "OrderProcessing.Tests\OrderProcessing.Tests.csproj", "{1BAA3D31-F69C-428A-A204-0DCC02230AAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C15DEB59-A200-41D5-89D7-6B53454C48F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C15DEB59-A200-41D5-89D7-6B53454C48F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C15DEB59-A200-41D5-89D7-6B53454C48F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C15DEB59-A200-41D5-89D7-6B53454C48F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BAA3D31-F69C-428A-A204-0DCC02230AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAA3D31-F69C-428A-A204-0DCC02230AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BAA3D31-F69C-428A-A204-0DCC02230AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAA3D31-F69C-428A-A204-0DCC02230AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
