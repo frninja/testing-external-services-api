@@ -11,17 +11,16 @@ namespace OrderProcessing
 
     public class OrderService
     {
-        private readonly string paymentApiBaseUrl = "https://api.payment-service.com";
+        private readonly string paymentApiBaseUrl;
         private readonly HttpClient httpClient;
 
-        public OrderService(string paymentApiBaseUrl)
+        public OrderService(string paymentApiBaseUrl) : this(paymentApiBaseUrl, new HttpClient())
         {
-            this.paymentApiBaseUrl = paymentApiBaseUrl;
-            this.httpClient = new HttpClient();
         }
 
-        public OrderService(HttpClient httpClient)
+        public OrderService(string paymentApiBaseUrl, HttpClient httpClient)
         {
+            this.paymentApiBaseUrl = paymentApiBaseUrl;
             this.httpClient = httpClient;
         }
 

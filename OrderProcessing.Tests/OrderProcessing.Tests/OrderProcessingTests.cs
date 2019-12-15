@@ -12,6 +12,8 @@ namespace OrderProcessing.Tests
     [TestFixture]
     public class OrderProcessingTests
     {
+        private const string PaymentApiBaseUrl = "https://api.payment-service.com";
+
         [Test]
         public async Task ChargeOrder_WhenCustomerHasNotEnoughMoney_ShouldRecordLastPaymentError()
         {
@@ -21,7 +23,7 @@ namespace OrderProcessing.Tests
                     new HttpRequestMessage
                     {
                         Method = HttpMethod.Post,
-                        RequestUri = new Uri("https://api.payment-service.com/charge")
+                        RequestUri = new Uri($"{PaymentApiBaseUrl}/charge")
                     },
                     new HttpResponseMessage
                     {
@@ -33,7 +35,7 @@ namespace OrderProcessing.Tests
                         }))
                     })
             );
-            OrderService service = new OrderService(fakeHttpClient);
+            OrderService service = new OrderService(PaymentApiBaseUrl, fakeHttpClient);
 
             await service.ChargeOrder(order);
 
