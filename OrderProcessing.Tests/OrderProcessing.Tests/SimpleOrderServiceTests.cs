@@ -5,12 +5,15 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
+using NSubstitute;
 using NUnit.Framework;
+
+using PaymentProcessing;
 
 namespace OrderProcessing.Tests
 {
     [TestFixture]
-    public class OrderProcessingTests
+    public class SimpleOrderServiceTests
     {
         private const string PaymentApiBaseUrl = "https://api.payment-service.com";
 
@@ -18,6 +21,7 @@ namespace OrderProcessing.Tests
         public async Task ChargeOrder_WhenCustomerHasNotEnoughMoney_ShouldRecordLastPaymentError()
         {
             Order order = new Order(id: 1, total: 99.0m);
+
             HttpClient fakeHttpClient = new HttpClient(
                 FakeHttpResponse(
                     new HttpRequestMessage
@@ -35,7 +39,7 @@ namespace OrderProcessing.Tests
                         }))
                     })
             );
-            OrderService service = new OrderService(PaymentApiBaseUrl, fakeHttpClient);
+            SimpleOrderService service = new SimpleOrderService(PaymentApiBaseUrl, fakeHttpClient);
 
             await service.ChargeOrder(order);
 

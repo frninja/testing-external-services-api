@@ -53,7 +53,7 @@ namespace OrderProcessing.Tests
         public async Task ChargeOrder_WhenPaymentProcessed_ShouldMarkOrderAsPaid()
         {
             Order order = new Order(id: 1, total: 99.0m);
-            OrderService service = new OrderService(PaymentApiBaseUrl);
+            SimpleOrderService service = new SimpleOrderService(PaymentApiBaseUrl);
 
             await service.ChargeOrder(order);
 

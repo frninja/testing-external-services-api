@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+using PaymentProcessing;
+
 namespace OrderProcessing
 {
 
-    public class OrderService
+    public class SimpleOrderService : IOrderService
     {
         private readonly string paymentApiBaseUrl;
         private readonly HttpClient httpClient;
 
-        public OrderService(string paymentApiBaseUrl) : this(paymentApiBaseUrl, new HttpClient())
+        public SimpleOrderService(string paymentApiBaseUrl) : this(paymentApiBaseUrl, new HttpClient())
         {
         }
 
-        public OrderService(string paymentApiBaseUrl, HttpClient httpClient)
+        public SimpleOrderService(string paymentApiBaseUrl, HttpClient httpClient)
         {
             this.paymentApiBaseUrl = paymentApiBaseUrl;
             this.httpClient = httpClient;
@@ -40,9 +42,9 @@ namespace OrderProcessing
         private async Task<string> ChargePayment(int orderId, decimal amount)
         {
             StringContent body = new StringContent(
-                JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
-                Encoding.UTF8,
-                "application/json");
+                            JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
+                            Encoding.UTF8,
+                            "application/json");
 
             HttpResponseMessage httpResponse = await httpClient.PostAsync($"{paymentApiBaseUrl}/charge", body);
             JObject response = JObject.Parse(await httpResponse.Content.ReadAsStringAsync());

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace OrderProcessing
+namespace PaymentProcessing
 {
     public class PaymentException : Exception
     {
