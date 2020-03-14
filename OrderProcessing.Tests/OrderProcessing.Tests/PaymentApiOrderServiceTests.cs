@@ -9,15 +9,17 @@ using PaymentProcessing;
 namespace OrderProcessing.Tests
 {
     [TestFixture]
-    public class GatewayOrderServiceTests
+    public class PaymentApiOrderServiceTests
     {
         [Test]
         public async Task ChargeOrder_WhenPaymentIsProcessed_ShouldMarkOrderAsPaid()
         {
             Order order = new Order(id: 1, total: 99.0m);
-            IPaymentGateway paymentGateway = Substitute.For<IPaymentGateway>();
-            paymentGateway.ChargePayment(orderId: order.Id, amount: order.Total).Returns(PaymentResult.Ok(transactionId: "777"));
-            GatewayOrderService service = new GatewayOrderService(paymentGateway);
+
+            IPaymentApiClient fakePaymentApiClient = Substitute.For<IPaymentApiClient>();
+            fakePaymentApiClient.ChargePayment(orderId: order.Id, amount: order.Total).Returns(PaymentResult.Ok(transactionId: "777"));
+
+            PaymentApiOrderService service = new PaymentApiOrderService(fakePaymentApiClient);
 
             await service.ChargeOrder(order);
 

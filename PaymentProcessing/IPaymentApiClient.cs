@@ -2,7 +2,7 @@
 
 namespace PaymentProcessing
 {
-    public interface IPaymentGateway
+    public interface IPaymentApiClient
     {
         Task<PaymentResult> ChargePayment(int orderId, decimal amount);
     }

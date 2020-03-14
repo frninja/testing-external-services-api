@@ -4,18 +4,18 @@ using PaymentProcessing;
 
 namespace OrderProcessing
 {
-    public class GatewayOrderService : IOrderService
+    public class PaymentApiOrderService : IOrderService
     {
-        private IPaymentGateway paymentGateway;
+        private IPaymentApiClient paymentApiClient;
 
-        public GatewayOrderService(IPaymentGateway paymentGateway)
+        public PaymentApiOrderService(IPaymentApiClient paymentApiClient)
         {
-            this.paymentGateway = paymentGateway;
+            this.paymentApiClient = paymentApiClient;
         }
 
         public async Task ChargeOrder(Order order)
         {
-            PaymentResult paymentResult = await paymentGateway.ChargePayment(order.Id, order.Total);
+            PaymentResult paymentResult = await paymentApiClient.ChargePayment(order.Id, order.Total);
             if (paymentResult.Success)
             {
                 order.MarkAsPaid(paymentResult.TransactionId);
