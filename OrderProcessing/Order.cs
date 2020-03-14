@@ -22,9 +22,9 @@ namespace OrderProcessing
             Total = total;
         }
 
-        public void MarkAsPaid(string transactionId)
+        public void MarkAsPaid(PaymentId id)
         {
-            PaymentId = new PaymentId(transactionId);
+            PaymentId = id;
         }
 
         public void RecordPaymentError(string error)

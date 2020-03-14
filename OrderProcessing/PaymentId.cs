@@ -13,5 +13,10 @@
         {
             return id.Value;
         }
+
+        public static implicit operator PaymentId(string value)
+        {
+            return new PaymentId(value);
+        }
     }
 }
