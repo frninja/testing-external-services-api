@@ -15,7 +15,7 @@ using WireMock.Settings;
 namespace OrderProcessing.Tests
 {
     [TestFixture]
-    public class OrderServiceWiremockTests
+    public class WiredHttpOrderServiceTests
     {
         private FluentMockServer server;
         private readonly static string PaymentApiBaseUrl = "http://localhost:9000";
@@ -53,7 +53,7 @@ namespace OrderProcessing.Tests
         public async Task ChargeOrder_WhenPaymentProcessed_ShouldMarkOrderAsPaid()
         {
             Order order = new Order(id: 1, total: 99.0m);
-            SimpleOrderService service = new SimpleOrderService(PaymentApiBaseUrl);
+            WiredHttpOrderService service = new WiredHttpOrderService(PaymentApiBaseUrl);
 
             await service.ChargeOrder(order);
 
