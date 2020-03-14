@@ -11,16 +11,12 @@ using PaymentProcessing;
 namespace OrderProcessing
 {
 
-    public class SimpleOrderService : IOrderService
+    public class InjectedHttpOrderService : IOrderService
     {
         private readonly string paymentApiBaseUrl;
         private readonly HttpClient httpClient;
 
-        public SimpleOrderService(string paymentApiBaseUrl) : this(paymentApiBaseUrl, new HttpClient())
-        {
-        }
-
-        public SimpleOrderService(string paymentApiBaseUrl, HttpClient httpClient)
+        public InjectedHttpOrderService(string paymentApiBaseUrl, HttpClient httpClient)
         {
             this.paymentApiBaseUrl = paymentApiBaseUrl;
             this.httpClient = httpClient;
@@ -30,8 +26,8 @@ namespace OrderProcessing
         {
             try
             {
-                string transcationId = await ChargePayment(order.Id, order.Total);
-                order.MarkAsPaid(transcationId);
+                TransactionId transactionId = await ChargePayment(order.Id, order.Total);
+                order.MarkAsPaid(transactionId);
             }
             catch (PaymentException e)
             {
@@ -39,7 +35,7 @@ namespace OrderProcessing
             }
         }
 
-        private async Task<string> ChargePayment(int orderId, decimal amount)
+        private async Task<TransactionId> ChargePayment(int orderId, decimal amount)
         {
             StringContent body = new StringContent(
                             JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
@@ -54,7 +50,7 @@ namespace OrderProcessing
                 throw new PaymentException(response["error"].ToString());
             }
 
-            return response["transaction_id"].ToString();
+            return new TransactionId(response["transaction_id"].ToString());
         }
     }
 }

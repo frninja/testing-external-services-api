@@ -5,15 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Newtonsoft.Json;
-using NSubstitute;
 using NUnit.Framework;
-
-using PaymentProcessing;
 
 namespace OrderProcessing.Tests
 {
     [TestFixture]
-    public class SimpleOrderServiceTests
+    public class InjectedHttpOrderServiceTests
     {
         private const string PaymentApiBaseUrl = "https://api.payment-service.com";
 
@@ -39,7 +36,7 @@ namespace OrderProcessing.Tests
                         }))
                     })
             );
-            SimpleOrderService service = new SimpleOrderService(PaymentApiBaseUrl, fakeHttpClient);
+            InjectedHttpOrderService service = new InjectedHttpOrderService(PaymentApiBaseUrl, fakeHttpClient);
 
             await service.ChargeOrder(order);
 

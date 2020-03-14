@@ -2,8 +2,6 @@
 using System.Net;
 using System.Threading.Tasks;
 
-using OrderProcessing;
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 
