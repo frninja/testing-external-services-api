@@ -1,4 +1,4 @@
-﻿namespace OrderProcessing
+﻿namespace PaymentProcessing
 {
     public class PaymentId
     {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using PaymentProcessing;
+
 namespace OrderProcessing
 {
     public class Order
