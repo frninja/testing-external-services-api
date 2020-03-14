@@ -18,11 +18,11 @@ namespace OrderProcessing
 
         public async Task ChargeOrder(Order order)
         {
-            TransactionId transactionId = await ChargePayment(order.Id, order.Total);
+            PaymentId transactionId = await ChargePayment(order.Id, order.Total);
             order.MarkAsPaid(transactionId);
         }
 
-        private async Task<TransactionId> ChargePayment(int orderId, decimal amount)
+        private async Task<PaymentId> ChargePayment(int orderId, decimal amount)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -39,7 +39,7 @@ namespace OrderProcessing
                     throw new Exception("Payment failed");
                 }
 
-                return new TransactionId(response["transaction_id"].ToString());
+                return new PaymentId(response["transaction_id"].ToString());
             } 
         }
     }

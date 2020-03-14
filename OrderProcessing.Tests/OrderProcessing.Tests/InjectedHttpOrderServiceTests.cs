@@ -40,7 +40,7 @@ namespace OrderProcessing.Tests
 
             await service.ChargeOrder(order);
 
-            Assert.AreEqual("Insufficient balance", order.PaymentError);
+            Assert.AreEqual("Insufficient balance", order.LastPaymentError);
         }
 
         private static HttpMessageHandler FakeHttpResponse(HttpRequestMessage request, HttpResponseMessage response)

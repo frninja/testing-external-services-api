@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OrderProcessing
 {
     public class Order
     {
-        public int Id { get; private set; }
-        public decimal Total { get; private set; }
+        private List<string> paymentErrors = new List<string>();
 
-        public bool IsPaid { get; private set; }
-        public string PaymentId { get; private set; }
-        public string PaymentError { get; private set; }
+        public OrderId Id { get; }
+        public decimal Total { get; }
 
-        public Order(int id, decimal total)
+        public bool IsPaid => PaymentId != null;
+        public PaymentId PaymentId { get; private set; }
+
+        public string LastPaymentError => paymentErrors.LastOrDefault();
+
+        public Order(OrderId id, decimal total)
         {
             Id = id;
             Total = total;
@@ -19,13 +24,12 @@ namespace OrderProcessing
 
         public void MarkAsPaid(string transactionId)
         {
-            IsPaid = true;
-            PaymentId = transactionId;
+            PaymentId = new PaymentId(transactionId);
         }
 
         public void RecordPaymentError(string error)
         {
-            PaymentError = error;
+            paymentErrors.Add(error);
         }
     }
 }
