@@ -24,6 +24,11 @@ namespace OrderProcessing
             Total = total;
         }
 
+        public void MarkAsPaid(Payment payment)
+        {
+            MarkAsPaid(payment.TransactionId);
+        }
+
         public void MarkAsPaid(PaymentId id)
         {
             PaymentId = id;

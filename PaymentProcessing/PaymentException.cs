@@ -5,11 +5,12 @@ namespace PaymentProcessing
 {
     public class PaymentException : Exception
     {
-        public string PaymentError { get; private set; }
-
         public PaymentException(string message) : base(message)
         {
-            PaymentError = message;
+        }
+
+        public PaymentException(string message, Exception innerException) : base(message, innerException)
+        {
         }
     }
 }

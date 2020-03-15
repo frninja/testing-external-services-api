@@ -31,7 +31,7 @@ namespace OrderProcessing
             }
             catch (PaymentException e)
             {
-                order.RecordPaymentError(e.PaymentError);
+                order.RecordPaymentError(e.Message);
             }
         }
 
