@@ -17,7 +17,10 @@ namespace OrderProcessing.Tests
             Order order = new Order(id: 1, total: 99.0m);
 
             IPaymentApiClient fakePaymentApiClient = Substitute.For<IPaymentApiClient>();
-            fakePaymentApiClient.ChargePayment(orderId: order.Id, amount: order.Total).Returns(PaymentResult.Ok(transactionId: "777"));
+            fakePaymentApiClient.ChargePayment(orderId: order.Id, amount: order.Total).Returns(new Payment
+            {
+                TransactionId = "777"
+            });
 
             PaymentApiOrderService service = new PaymentApiOrderService(fakePaymentApiClient);
 

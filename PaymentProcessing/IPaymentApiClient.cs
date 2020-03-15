@@ -4,6 +4,6 @@ namespace PaymentProcessing
 {
     public interface IPaymentApiClient
     {
-        Task<PaymentResult> ChargePayment(int orderId, decimal amount);
+        Task<Payment> ChargePayment(int orderId, decimal amount);
     }
 }

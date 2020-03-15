@@ -15,14 +15,14 @@ namespace OrderProcessing
 
         public async Task ChargeOrder(Order order)
         {
-            PaymentResult paymentResult = await paymentApiClient.ChargePayment(order.Id, order.Total);
-            if (paymentResult.Success)
+            try
             {
-                order.MarkAsPaid(paymentResult.TransactionId);
+                Payment payment = await paymentApiClient.ChargePayment(order.Id, order.Total);
+                order.MarkAsPaid(payment);
             }
-            else
+            catch (PaymentException e)
             {
-                order.RecordPaymentError(paymentResult.Error);
+                order.RecordPaymentError(e.Message);
             }
         }
     }

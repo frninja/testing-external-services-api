@@ -18,7 +18,7 @@ namespace PaymentProcessing
             this.httpClient = httpClient;
         }
 
-        public async Task<PaymentResult> ChargePayment(int orderId, decimal amount)
+        public async Task<Payment> ChargePayment(int orderId, decimal amount)
         {
             StringContent body = new StringContent(
                             JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
@@ -30,10 +30,10 @@ namespace PaymentProcessing
 
             if (!httpResponse.IsSuccessStatusCode)
             {
-                return PaymentResult.Failed(response["error"].ToString());
+                throw new PaymentException(response["error"].ToString());
             }
 
-            return PaymentResult.Ok(response["transaction_id"].ToString());
+            return response.ToObject<Payment>();
         }
     }
 }

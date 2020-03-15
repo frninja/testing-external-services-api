@@ -26,8 +26,8 @@ namespace OrderProcessing
         {
             try
             {
-                PaymentId transactionId = await ChargePayment(order.Id, order.Total);
-                order.MarkAsPaid(transactionId);
+                Payment payment = await ChargePayment(order.Id, order.Total);
+                order.MarkAsPaid(payment);
             }
             catch (PaymentException e)
             {
@@ -35,7 +35,7 @@ namespace OrderProcessing
             }
         }
 
-        private async Task<PaymentId> ChargePayment(int orderId, decimal amount)
+        private async Task<Payment> ChargePayment(int orderId, decimal amount)
         {
             StringContent body = new StringContent(
                             JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
@@ -50,7 +50,7 @@ namespace OrderProcessing
                 throw new PaymentException(response["error"].ToString());
             }
 
-            return new PaymentId(response["transaction_id"].ToString());
+            return response.ToObject<Payment>();
         }
     }
 }
