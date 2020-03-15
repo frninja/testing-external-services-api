@@ -16,5 +16,14 @@ namespace PaymentProcessing
                 TransactionId = transactionId
             };
         }
+
+        public static PaymentResult Failed(string error)
+        {
+            return new PaymentResult
+            {
+                Success = false,
+                Error = error,
+            };
+        }
     }
 }
