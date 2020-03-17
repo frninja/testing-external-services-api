@@ -20,7 +20,7 @@ namespace OrderProcessing
 
         public async Task ChargeOrder(Order order)
         {
-            Payment payment = await ChargePayment(order.Id, order.Total);
+            StripePayment payment = await ChargePayment(order.Id, order.Total);
             try
             {
                 order.MarkAsPaid(payment);
@@ -31,7 +31,7 @@ namespace OrderProcessing
             }
         }
 
-        private async Task<Payment> ChargePayment(int orderId, decimal amount)
+        private async Task<StripePayment> ChargePayment(int orderId, decimal amount)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -48,7 +48,7 @@ namespace OrderProcessing
                     throw new PaymentException(response["error"].ToString());
                 }
 
-                return response.ToObject<Payment>();
+                return response.ToObject<StripePayment>();
             } 
         }
     }

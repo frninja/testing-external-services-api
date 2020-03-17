@@ -9,20 +9,20 @@ using PaymentProcessing;
 namespace OrderProcessing.Tests
 {
     [TestFixture]
-    public class PaymentApiOrderServiceTests
+    public class StripePaymentApiOrderServiceTests
     {
         [Test]
         public async Task ChargeOrder_WhenPaymentIsProcessed_ShouldMarkOrderAsPaid()
         {
             Order order = new Order(id: 1, total: 99.0m);
 
-            IPaymentApiClient fakePaymentApiClient = Substitute.For<IPaymentApiClient>();
-            fakePaymentApiClient.ChargePayment(orderId: order.Id, amount: order.Total).Returns(new Payment
+            IStripePaymentApiClient fakePaymentApiClient = Substitute.For<IStripePaymentApiClient>();
+            fakePaymentApiClient.ChargePayment(orderId: order.Id, amount: order.Total).Returns(new StripePayment
             {
                 TransactionId = "777"
             });
 
-            PaymentApiOrderService service = new PaymentApiOrderService(fakePaymentApiClient);
+            StripePaymentApiOrderService service = new StripePaymentApiOrderService(fakePaymentApiClient);
 
             await service.ChargeOrder(order);
 

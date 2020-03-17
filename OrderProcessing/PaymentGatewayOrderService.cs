@@ -17,8 +17,8 @@ namespace OrderProcessing
         {
             try
             {
-                PaymentId paymentId = await paymentGateway.ChargeOrder(order.Id, order.Total);
-                order.MarkAsPaid(paymentId);
+                IPayment payment = await paymentGateway.ChargeOrder(order.Id, order.Total);
+                order.MarkAsPaid(payment);
             }
             catch (PaymentException e)
             {

@@ -4,11 +4,11 @@ using PaymentProcessing;
 
 namespace OrderProcessing
 {
-    public class PaymentApiOrderService : IOrderService
+    public class StripePaymentApiOrderService : IOrderService
     {
-        private IPaymentApiClient paymentApiClient;
+        private IStripePaymentApiClient paymentApiClient;
 
-        public PaymentApiOrderService(IPaymentApiClient paymentApiClient)
+        public StripePaymentApiOrderService(IStripePaymentApiClient paymentApiClient)
         {
             this.paymentApiClient = paymentApiClient;
         }
@@ -17,7 +17,7 @@ namespace OrderProcessing
         {
             try
             {
-                Payment payment = await paymentApiClient.ChargePayment(order.Id, order.Total);
+                StripePayment payment = await paymentApiClient.ChargePayment(order.Id, order.Total);
                 order.MarkAsPaid(payment);
             }
             catch (PaymentException e)

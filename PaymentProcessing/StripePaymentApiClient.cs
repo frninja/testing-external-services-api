@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace PaymentProcessing
 {
-    public class StripePaymentApiClient : IPaymentApiClient
+    public class StripePaymentApiClient : IStripePaymentApiClient
     {
         private readonly string paymentApiBaseUrl;
         private readonly HttpClient httpClient;
@@ -18,7 +18,7 @@ namespace PaymentProcessing
             this.httpClient = httpClient;
         }
 
-        public async Task<Payment> ChargePayment(int orderId, decimal amount)
+        public async Task<StripePayment> ChargePayment(int orderId, decimal amount)
         {
             StringContent body = new StringContent(
                             JsonConvert.SerializeObject(new { OrderId = orderId, Amount = amount }),
@@ -33,7 +33,7 @@ namespace PaymentProcessing
                 throw new PaymentException(response["error"].ToString());
             }
 
-            return response.ToObject<Payment>();
+            return response.ToObject<StripePayment>();
         }
     }
 }

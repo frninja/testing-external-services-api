@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace PaymentProcessing
 {
-    public class Payment
+    public class StripePayment
     {
         [JsonProperty(PropertyName = "transaction_id")]
         public string TransactionId { get; set; }

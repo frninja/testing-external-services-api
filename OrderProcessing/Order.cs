@@ -24,14 +24,14 @@ namespace OrderProcessing
             Total = total;
         }
 
-        public void MarkAsPaid(Payment payment)
+        public void MarkAsPaid(IPayment payment)
         {
-            MarkAsPaid(payment.TransactionId);
+            PaymentId = payment.Id;
         }
 
-        public void MarkAsPaid(PaymentId id)
+        public void MarkAsPaid(StripePayment payment)
         {
-            PaymentId = id;
+            PaymentId = payment.TransactionId;
         }
 
         public void RecordPaymentError(string error)
