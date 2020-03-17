@@ -1,5 +1,4 @@
-﻿using System;
-namespace PaymentProcessing
+﻿namespace PaymentProcessing
 {
     public interface IPayment
     {
