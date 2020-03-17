@@ -10,15 +10,15 @@ namespace OrderProcessing
     {
         private List<string> paymentErrors = new List<string>();
 
-        public OrderId Id { get; }
+        public int Id { get; }
         public decimal Total { get; }
 
         public bool IsPaid => PaymentId != null;
-        public PaymentId PaymentId { get; private set; }
+        public string PaymentId { get; private set; }
 
         public string LastPaymentError => paymentErrors.LastOrDefault();
 
-        public Order(OrderId id, decimal total)
+        public Order(int id, decimal total)
         {
             Id = id;
             Total = total;
