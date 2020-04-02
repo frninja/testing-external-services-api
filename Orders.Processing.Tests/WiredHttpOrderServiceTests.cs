@@ -10,6 +10,9 @@ using WireMock.ResponseBuilders;
 using WireMock.Server;
 using WireMock.Settings;
 
+using Orders.Model;
+using Orders.Processing.Implementation;
+
 namespace OrderProcessing.Tests
 {
     [TestFixture]

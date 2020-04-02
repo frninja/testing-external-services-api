@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using PaymentProcessing;
-
-namespace OrderProcessing
+namespace Orders.Model
 {
     public class Order
     {
@@ -24,14 +22,9 @@ namespace OrderProcessing
             Total = total;
         }
 
-        public void MarkAsPaid(IPayment payment)
+        public void MarkAsPaid(string paymentId)
         {
-            PaymentId = payment.Id;
-        }
-
-        public void MarkAsPaid(StripePayment payment)
-        {
-            PaymentId = payment.TransactionId;
+            PaymentId = paymentId;
         }
 
         public void RecordPaymentError(string error)

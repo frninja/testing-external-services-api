@@ -1,5 +1,6 @@
 ﻿using System;
-namespace PaymentProcessing
+
+namespace Payments.Processing
 {
     public class InsufficientFundsException : PaymentException
     {

@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace PaymentProcessing
+using Payments.Model;
+using Payments.Processing;
+
+namespace Payments.Processing.Implementation
 {
     public class StripePaymentApiClient : IStripePaymentApiClient
     {

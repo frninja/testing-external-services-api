@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PaymentProcessing;
 
-namespace OrderProcessing
+using Orders.Model;
+using Payments.Model;
+using Payments.Processing;
+
+namespace Orders.Processing.Implementation
 {
     public class StripePaymentApiOrderService : IOrderService
     {
@@ -18,7 +21,7 @@ namespace OrderProcessing
             try
             {
                 StripePayment payment = await paymentApiClient.ChargePayment(order.Id, order.Total);
-                order.MarkAsPaid(payment);
+                order.MarkAsPaid(payment.TransactionId);
             }
             catch (PaymentException e)
             {

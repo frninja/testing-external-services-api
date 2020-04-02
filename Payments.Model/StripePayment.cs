@@ -1,12 +1,10 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace PaymentProcessing
+namespace Payments.Model
 {
-    public class StripePayment : IPayment
+    public class StripePayment
     {
-        public string Id => TransactionId;
-
         [JsonProperty(PropertyName = "transaction_id")]
         public string TransactionId { get; set; }
     }

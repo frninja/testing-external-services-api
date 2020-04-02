@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace OrderProcessing.Tests
+using Orders.Model;
+using Orders.Processing.Implementation;
+
+namespace Orders.Processing.Tests
 {
     [TestFixture]
     public class InjectedHttpOrderServiceTests

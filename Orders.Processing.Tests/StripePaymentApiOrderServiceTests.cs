@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 
-using PaymentProcessing;
+using Orders.Model;
+using Orders.Processing.Implementation;
+using Payments.Model;
+using Payments.Processing;
 
 namespace OrderProcessing.Tests
 {

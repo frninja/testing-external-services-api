@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace PaymentProcessing
+using Payments.Model;
+
+namespace Payments.Processing
 {
     public interface IStripePaymentApiClient
     {

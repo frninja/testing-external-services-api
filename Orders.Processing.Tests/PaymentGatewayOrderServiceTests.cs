@@ -3,9 +3,12 @@ using System.Threading.Tasks;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
-using PaymentProcessing;
 
-namespace OrderProcessing.Tests
+using Orders.Model;
+using Orders.Processing.Implementation;
+using Payments.Processing;
+
+namespace Orders.Processing.Tests
 {
     [TestFixture]
     public class PaymentGatewayOrderServiceTests
@@ -15,8 +18,8 @@ namespace OrderProcessing.Tests
         {
             Order order = new Order(id: 1, total: 99.0m);
 
-            IPaymentGateway fakePaymentGateway = Substitute.For<IPaymentGateway>();
-            fakePaymentGateway.ChargeOrder(orderId: order.Id, amount: order.Total).Throws<InsufficientFundsException>();
+            IOrderPaymentGateway fakePaymentGateway = Substitute.For<IOrderPaymentGateway>();
+            fakePaymentGateway.ChargeOrder(order).Throws<InsufficientFundsException>();
 
             PaymentGatewayOrderService service = new PaymentGatewayOrderService(fakePaymentGateway);
 

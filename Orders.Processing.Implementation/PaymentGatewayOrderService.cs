@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PaymentProcessing;
 
-namespace OrderProcessing
+using Orders.Model;
+using Payments.Model;
+using Payments.Processing;
+
+namespace Orders.Processing.Implementation
 {
     public class PaymentGatewayOrderService : IOrderService
     {
-        private IPaymentGateway paymentGateway;
+        private IOrderPaymentGateway paymentGateway;
 
-        public PaymentGatewayOrderService(IPaymentGateway paymentGateway)
+        public PaymentGatewayOrderService(IOrderPaymentGateway paymentGateway)
         {
             this.paymentGateway = paymentGateway;
         }
@@ -17,8 +20,8 @@ namespace OrderProcessing
         {
             try
             {
-                IPayment payment = await paymentGateway.ChargeOrder(order.Id, order.Total);
-                order.MarkAsPaid(payment);
+                Payment payment = await paymentGateway.ChargeOrder(order);
+                order.MarkAsPaid(payment.Id);
             }
             catch (PaymentException e)
             {

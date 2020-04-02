@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-using PaymentProcessing;
+using Orders.Model;
+using Payments.Model;
+using Payments.Processing;
 
-namespace OrderProcessing
+namespace Orders.Processing.Implementation
 {
 
     public class InjectedHttpOrderService : IOrderService
@@ -27,7 +29,7 @@ namespace OrderProcessing
             try
             {
                 StripePayment payment = await ChargePayment(order.Id, order.Total);
-                order.MarkAsPaid(payment);
+                order.MarkAsPaid(payment.TransactionId);
             }
             catch (PaymentException e)
             {

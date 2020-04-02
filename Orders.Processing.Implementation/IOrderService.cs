@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace OrderProcessing
+using Orders.Model;
+
+namespace Orders.Processing.Implementation
 {
     public interface IOrderService
     {
