@@ -13,7 +13,7 @@ using WireMock.Settings;
 using Orders.Model;
 using Orders.Processing.Implementation;
 
-namespace OrderProcessing.Tests
+namespace Orders.Processing.Tests
 {
     [TestFixture]
     public class WiredHttpOrderServiceTests

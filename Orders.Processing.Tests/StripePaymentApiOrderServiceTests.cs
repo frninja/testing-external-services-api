@@ -9,7 +9,7 @@ using Orders.Processing.Implementation;
 using Payments.Model;
 using Payments.Processing;
 
-namespace OrderProcessing.Tests
+namespace Orders.Processing.Tests
 {
     [TestFixture]
     public class StripePaymentApiOrderServiceTests
