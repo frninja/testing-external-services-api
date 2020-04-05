@@ -9,9 +9,9 @@ namespace Orders.Processing.Implementation
 {
     public class PaymentGatewayOrderService : IOrderService
     {
-        private IOrderPaymentGateway paymentGateway;
+        private IPaymentGateway paymentGateway;
 
-        public PaymentGatewayOrderService(IOrderPaymentGateway paymentGateway)
+        public PaymentGatewayOrderService(IPaymentGateway paymentGateway)
         {
             this.paymentGateway = paymentGateway;
         }
@@ -23,7 +23,11 @@ namespace Orders.Processing.Implementation
                 Payment payment = await paymentGateway.ChargeOrder(order);
                 order.MarkAsPaid(payment.Id);
             }
-            catch (StripePaymentException e)
+            catch (NotEnoughMoneyException e)
+            {
+                order.RecordPaymentError("Not enough money");
+            }
+            catch (PaymentException e)
             {
                 order.RecordPaymentError(e.Message);
             }

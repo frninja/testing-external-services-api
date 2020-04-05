@@ -2,7 +2,7 @@
 
 using Orders.Model;
 
-namespace Orders.Processing.Implementation
+namespace Orders.Processing
 {
     public interface IOrderService
     {

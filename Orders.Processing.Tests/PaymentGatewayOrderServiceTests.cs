@@ -5,6 +5,7 @@ using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 
 using Orders.Model;
+using Orders.Processing;
 using Orders.Processing.Implementation;
 using Payments.Processing;
 
@@ -18,14 +19,14 @@ namespace Orders.Processing.Tests
         {
             Order order = new Order(id: 1, total: 99.0m);
 
-            IOrderPaymentGateway fakePaymentGateway = Substitute.For<IOrderPaymentGateway>();
-            fakePaymentGateway.ChargeOrder(order).Throws<StripeInsufficientFundsException>();
+            IPaymentGateway fakePaymentGateway = Substitute.For<IPaymentGateway>();
+            fakePaymentGateway.ChargeOrder(order).Throws<NotEnoughMoneyException>();
 
             PaymentGatewayOrderService service = new PaymentGatewayOrderService(fakePaymentGateway);
 
             await service.ChargeOrder(order);
 
-            Assert.AreEqual("Insufficient balance", order.LastPaymentError);
+            Assert.AreEqual("Not enough money", order.LastPaymentError);
         }
     }
 }

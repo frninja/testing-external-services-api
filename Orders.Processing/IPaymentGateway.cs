@@ -6,7 +6,7 @@ using Payments.Model;
 
 namespace Orders.Processing
 {
-    public interface IOrderPaymentGateway
+    public interface IPaymentGateway
     {
         Task<Payment> ChargeOrder(Order order);
     }

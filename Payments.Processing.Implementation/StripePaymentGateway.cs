@@ -8,7 +8,7 @@ using Payments.Model;
 
 namespace Payments.Processing
 {
-    public class StripePaymentGateway : IOrderPaymentGateway
+    public class StripePaymentGateway : IPaymentGateway
     {
         private IStripePaymentApiClient apiClient;
 
@@ -19,8 +19,19 @@ namespace Payments.Processing
 
         public async Task<Payment> ChargeOrder(Order order)
         {
-            StripePayment payment = await apiClient.ChargePayment(order.Id, order.Total);
-            return MapToPayment(payment);
+            try
+            {
+                StripePayment payment = await apiClient.ChargePayment(order.Id, order.Total);
+                return MapToPayment(payment);
+            }
+            catch (StripeInsufficientFundsException e)
+            {
+                throw new NotEnoughMoneyException("Not enough money", e);
+            }
+            catch (StripePaymentException e)
+            {
+                throw new PaymentException("Sorry, payment failed", e);
+            }
         }
 
         private Payment MapToPayment(StripePayment payment)
