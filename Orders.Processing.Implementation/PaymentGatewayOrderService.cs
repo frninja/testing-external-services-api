@@ -23,7 +23,7 @@ namespace Orders.Processing.Implementation
                 Payment payment = await paymentGateway.ChargeOrder(order);
                 order.MarkAsPaid(payment.ExternalPaymentId);
             }
-            catch (NotEnoughMoneyException e)
+            catch (NotEnoughMoneyException)
             {
                 order.RecordPaymentError("Not enough money");
             }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Orders.Model;
 using Orders.Processing;
 using Payments.Model;
+using Polly;
 
 namespace Payments.Processing.Implementation
 {
@@ -17,7 +18,11 @@ namespace Payments.Processing.Implementation
 
         public async Task<Payment> ChargeOrder(Order order)
         {
-            PaypalOperationStatus paymentOperationStatus = await apiClient.Pay(order.Id, order.Total);
+            PaypalOperationStatus paymentOperationStatus = await Policy
+                .HandleResult<PaypalOperationStatus>(status => status.ErrorCode == PaypalErrorCode.UnauthorizedOperation)
+                .RetryAsync(10)
+                .ExecuteAsync(async () => await apiClient.Pay(order.Id, order.Total));
+
             if (paymentOperationStatus.PaymentId != null)
             {
                 return MapToPayment(paymentOperationStatus);
