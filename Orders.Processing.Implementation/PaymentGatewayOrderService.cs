@@ -21,7 +21,7 @@ namespace Orders.Processing.Implementation
             try
             {
                 Payment payment = await paymentGateway.ChargeOrder(order);
-                order.MarkAsPaid(payment.Id);
+                order.MarkAsPaid(payment.ExternalPaymentId);
             }
             catch (NotEnoughMoneyException e)
             {

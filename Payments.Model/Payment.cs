@@ -4,11 +4,11 @@ namespace Payments.Model
 {
     public class Payment
     {
-        public string Id { get; }
+        public string ExternalPaymentId { get; }
 
         public Payment(string id)
         {
-            Id = id;
+            ExternalPaymentId = id;
         }
     }
 }

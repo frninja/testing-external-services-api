@@ -5,9 +5,7 @@ using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 
 using Orders.Model;
-using Orders.Processing;
 using Orders.Processing.Implementation;
-using Payments.Processing;
 
 namespace Orders.Processing.Tests
 {
