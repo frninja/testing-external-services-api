@@ -23,7 +23,7 @@ namespace Orders.Processing.Implementation
                 Payment payment = await paymentGateway.ChargeOrder(order);
                 order.MarkAsPaid(payment.Id);
             }
-            catch (PaymentException e)
+            catch (StripePaymentException e)
             {
                 order.RecordPaymentError(e.Message);
             }

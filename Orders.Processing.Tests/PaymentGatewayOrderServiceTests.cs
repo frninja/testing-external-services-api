@@ -19,7 +19,7 @@ namespace Orders.Processing.Tests
             Order order = new Order(id: 1, total: 99.0m);
 
             IOrderPaymentGateway fakePaymentGateway = Substitute.For<IOrderPaymentGateway>();
-            fakePaymentGateway.ChargeOrder(order).Throws<InsufficientFundsException>();
+            fakePaymentGateway.ChargeOrder(order).Throws<StripeInsufficientFundsException>();
 
             PaymentGatewayOrderService service = new PaymentGatewayOrderService(fakePaymentGateway);
 

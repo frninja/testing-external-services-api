@@ -27,7 +27,7 @@ namespace Orders.Processing.Implementation
             {
                 order.MarkAsPaid(payment.TransactionId);
             }
-            catch (PaymentException e)
+            catch (StripePaymentException e)
             {
                 order.RecordPaymentError(e.Message);
             }
@@ -47,7 +47,7 @@ namespace Orders.Processing.Implementation
 
                 if (!httpResponse.IsSuccessStatusCode)
                 {
-                    throw new PaymentException(response["error"].ToString());
+                    throw new StripePaymentException(response["error"].ToString());
                 }
 
                 return response.ToObject<StripePayment>();

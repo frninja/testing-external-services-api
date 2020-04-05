@@ -23,7 +23,7 @@ namespace Orders.Processing.Implementation
                 StripePayment payment = await paymentApiClient.ChargePayment(order.Id, order.Total);
                 order.MarkAsPaid(payment.TransactionId);
             }
-            catch (PaymentException e)
+            catch (StripePaymentException e)
             {
                 order.RecordPaymentError(e.Message);
             }

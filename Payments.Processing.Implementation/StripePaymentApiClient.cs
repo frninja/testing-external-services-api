@@ -33,7 +33,7 @@ namespace Payments.Processing.Implementation
 
             if (!httpResponse.IsSuccessStatusCode)
             {
-                throw new PaymentException(response["error"].ToString());
+                throw new StripePaymentException(response["error"].ToString());
             }
 
             return response.ToObject<StripePayment>();
